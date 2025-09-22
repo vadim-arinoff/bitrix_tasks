@@ -1,7 +1,9 @@
 <?
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+var_dump($_REQUEST);
+?>
 
-if ($arResult["isFormNote"] == "Y"):?>
+<?if ($arResult["isFormNote"] == "Y"):?>
     <div class="contact-form__success-note">
         <?=$arResult["FORM_NOTE"]?>
     </div>
@@ -21,7 +23,7 @@ if ($arResult["isFormNote"] == "Y"):?>
         </div>
     <?endif;?>
 
-    <form class="contact-form__form" name="<?=$arResult["arForm"]["SID"]?>" action="<?=POST_FORM_ACTION_URI?>" method="POST">
+    <form class="contact-form__form" name="<?=$arResult["arForm"]["SID"]?>" action="" method="POST">
         <?=bitrix_sessid_post()?>
 
         <div class="contact-form__form-inputs">
@@ -100,11 +102,14 @@ if ($arResult["isFormNote"] == "Y"):?>
         </div>
 
         <div class="contact-form__bottom">
-            <div class="contact-form__bottom-policy">Нажимая &laquo;Отправить&raquo;, Вы&nbsp;подтверждаете, что ознакомлены, полностью согласны и&nbsp;принимаете условия &laquo;Согласия на&nbsp;обработку персональных данных&raquo;.</div>
-            <button class="form-button contact-form__bottom-button" type="submit" name="web_form_submit" value="Y">
-                <div class="form-button__title">Оставить заявку</div>
-            </button>
-        </div>
+    <div class="contact-form__bottom-policy">Нажимая &laquo;Отправить&raquo;, Вы&nbsp;подтверждаете, что ознакомлены, полностью согласны и&nbsp;принимаете условия &laquo;Согласия на&nbsp;обработку персональных данных&raquo;.</div>
+
+    <input type="hidden" name="web_form_submit" value="Y" />
+    
+    <button class="form-button contact-form__bottom-button" type="submit">
+        <div class="form-button__title">Оставить заявку</div>
+    </button>
+</div>
     </form>
 </div>
 <?endif;?>
