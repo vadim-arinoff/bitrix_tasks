@@ -17,7 +17,7 @@ $this->setFrameMode(true);
             ?>
 
             <a class="article-item article-list__item" 
-               href="<?= $arItem["PROPERTIES"]["LINK"]["VALUE"] ?>" 
+               href="<?= $arItem["DETAIL_PAGE_URL"] ?>" 
                data-anim="anim-3" 
                id="<?=$this->GetEditAreaId($arItem['ID']);?>">
                 
