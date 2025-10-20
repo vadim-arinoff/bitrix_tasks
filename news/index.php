@@ -1,10 +1,10 @@
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");?>
-<?$APPLICATION->IncludeComponent(
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+$APPLICATION->SetTitle("");?><?$APPLICATION->IncludeComponent(
 	"bitrix:news", 
 	".default", 
 	array(
 		"ADD_ELEMENT_CHAIN" => "N",
-		"ADD_SECTIONS_CHAIN" => "Y",
+		"ADD_SECTIONS_CHAIN" => "N",
 		"AJAX_MODE" => "N",
 		"AJAX_OPTION_ADDITIONAL" => "",
 		"AJAX_OPTION_HISTORY" => "N",
@@ -23,7 +23,7 @@
 			0 => "",
 			1 => "",
 		),
-		"DETAIL_PAGER_SHOW_ALL" => "Y",
+		"DETAIL_PAGER_SHOW_ALL" => "N",
 		"DETAIL_PAGER_TEMPLATE" => "",
 		"DETAIL_PAGER_TITLE" => "Страница",
 		"DETAIL_PROPERTY_CODE" => array(
@@ -31,7 +31,7 @@
 			1 => "",
 		),
 		"DETAIL_SET_CANONICAL_URL" => "N",
-		"DISPLAY_BOTTOM_PAGER" => "Y",
+		"DISPLAY_BOTTOM_PAGER" => "N",
 		"DISPLAY_DATE" => "Y",
 		"DISPLAY_NAME" => "Y",
 		"DISPLAY_PICTURE" => "Y",
@@ -40,7 +40,7 @@
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 		"IBLOCK_ID" => "5",
 		"IBLOCK_TYPE" => "News_component",
-		"INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
 		"LIST_ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"LIST_FIELD_CODE" => array(
 			0 => "",
@@ -57,7 +57,7 @@
 		"PAGER_BASE_LINK_ENABLE" => "N",
 		"PAGER_DESC_NUMBERING" => "N",
 		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-		"PAGER_SHOW_ALL" => "N",
+		"PAGER_SHOW_ALL" => "Y",
 		"PAGER_SHOW_ALWAYS" => "N",
 		"PAGER_TEMPLATE" => ".default",
 		"PAGER_TITLE" => "Новости",
@@ -69,9 +69,9 @@
 		"SET_TITLE" => "Y",
 		"SHOW_404" => "N",
 		"SORT_BY1" => "SORT",
-    	"SORT_BY2" => "ID",
-    	"SORT_ORDER1" => "ASC",
-    	"SORT_ORDER2" => "DESC",
+		"SORT_BY2" => "ID",
+		"SORT_ORDER1" => "ASC",
+		"SORT_ORDER2" => "DESC",
 		"STRICT_SECTION_CHECK" => "N",
 		"USE_CATEGORIES" => "N",
 		"USE_FILTER" => "N",
@@ -84,10 +84,9 @@
 		"COMPONENT_TEMPLATE" => ".default",
 		"SEF_URL_TEMPLATES" => array(
 			"news" => "",
-			"section" => "",
-			"detail" => "#ELEMENT_ID#/",
+			"section" => "#SECTION_CODE#/",
+			"detail" => "#SECTION_CODE#/#ELEMENT_CODE#/",
 		)
 	),
 	false
-);?>
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

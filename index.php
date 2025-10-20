@@ -53,7 +53,7 @@ $APPLICATION->SetTitle("Главная страница");?>
 		"SORT_BY2" => "SORT",
 		"SORT_ORDER2" => "ASC",
 		"FILTER_NAME" => "",
-		"DETAIL_URL" => "/news/#ELEMENT_ID#/",
+		"DETAIL_URL" => "/news/#SECTION_CODE#/#ELEMENT_CODE#/",
 		"AJAX_OPTION_ADDITIONAL" => "",
 		"DISPLAY_DATE" => "Y",
 		"DISPLAY_NAME" => "Y",
