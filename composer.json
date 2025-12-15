@@ -1,11 +1,12 @@
 {
   "extra": {
     "installer-paths": {
-      "local/modules/{$name}/": ["type:bitrix-module"]
+      "local/modules/{$name}/": ["type:bitrix-module"],
+      "vendor/{$vendor}/{$name}/": ["type:library", "type:project"]
     }
   },
   "require": {
-    "andreyryabin/sprint.migration": "dev-master"
+    "andreyryabin/sprint.migration": "dev-master",
   },
   "config": {
     "allow-plugins": {

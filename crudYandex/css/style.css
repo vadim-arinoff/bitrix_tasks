@@ -1,0 +1,143 @@
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+h1 {
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.btn-back {
+    color: #333;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}
+
+.btn-back:hover {
+    background-color: #dbe0e5;
+}
+
+.btn-delete {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    padding: 2px 8px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+.upload-box {
+    background: #f1f3f5;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+}
+
+.upload-box button {
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.file-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+}
+
+.item-name {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.item-name:hover {
+    text-decoration: underline;
+}
+
+.item-name.is-file {
+    color: #333;
+    text-decoration: none;
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    min-width: 35px;
+    text-align: center;
+}
+
+.badge-dir {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge-file {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.error-msg {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.file-size {
+    color: #999;
+    font-size: 12px;
+    margin-left: 5px;
+}
