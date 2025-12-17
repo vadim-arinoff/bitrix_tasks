@@ -1,5 +1,6 @@
 <?php
-namespace Only\Site\Handlers;
+namespace Dev\Site\Handlers;
+//namespace Only\Site\Handlers;
 
 use Bitrix\Main\Loader;
 use CIBlock;
@@ -11,22 +12,33 @@ class Iblock
 {
     public function addLog(&$arFields)
     {
+        if(empty($arFields['ID'])) {
+            return;
+        }
+
         $logBlockId = \Only\Site\Helpers\IBlock::getIblockID('LOG', 'service');
-        /*
-         * Temp fix Log ID:
-         $logBlockId = 3;
-         */
+        if(!$logBlockId) {
+            $logBlockId = 3;
+        }
 
         // 1.2
         if ($arFields['IBLOCK_ID'] == $logBlockId) {
             return; 
+        }
+
+        if (!Loader::includeModule("iblock")) {
+            return;
         }
         
         if (!isset ($arFields ['IBLOCK_ID']) || !$arFields ['IBLOCK_ID'] > 0) {
             return;
         }
 
-        $resIblock = \CIBlockElement::GetByID($arFields ['IBLOCK_ID'])->GetNext();
+        $resIblock = \CIBlock::GetByID($arFields ['IBLOCK_ID'])->GetNext();
+        if (!$resIblock) {
+            return;
+        }
+        
         $resIblockName = $resIblock['NAME'];
         $resIblockCode = $resIblock['CODE'];
         
@@ -76,7 +88,7 @@ class Iblock
         ];
 
         $el = new \CIBlockElement;
-        $rsLog = \CIBlock::GetList(
+        $rsLog = \CIBlockElement::GetList(
             [],
             [
                 'IBLOCK_ID' => $logBlockId,

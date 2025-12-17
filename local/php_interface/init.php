@@ -7,7 +7,7 @@ $eventManager->addEventHandler(
     'iblock',
     'OnAfterIBlockElementAdd',
     [
-        '\Only\Site\Handlers\Iblock',
+        '\Dev\Site\Handlers\Iblock',
         'addLog'
     ]
 );
@@ -16,7 +16,7 @@ $eventManager->addEventHandler(
     'iblock',
     'OnAfterIBlockElementUpdate',
     [
-        '\Only\Site\Handlers\Iblock',
+        '\Dev\Site\Handlers\Iblock',
         'addLog'
     ]
 );
