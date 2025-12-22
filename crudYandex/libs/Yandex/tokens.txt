@@ -1,3 +1,0 @@
-ClientID: 34cd2a76ec3443b0bdfc9a4eef6192ac
-Client secret: fba2bb87899e483297902e9d3b78b3de
-access_token: y0__xDl48TlARiEqTwggcGn1RUwu4fX3Aew1W_FWv97C1DFSq6mqiw9ZFvYXA

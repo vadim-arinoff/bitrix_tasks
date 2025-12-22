@@ -8,6 +8,11 @@ Loc::loadMessages(__FILE__);
 class phpdevorg_cprop extends CModule
 {
     var $MODULE_ID  = 'phpdevorg.cprop';
+    public $MODULE_VERSION, 
+    $FILE_PREFIX, 
+    $MODULE_FOLDER, 
+    $FOLDER, 
+    $INSTALL_PATH_FROM;
 
     function __construct()
     {
@@ -110,7 +115,7 @@ class phpdevorg_cprop extends CModule
 
     function UnInstallEvents()
     {
-        $classHandler = 'CIBlockPropertyCprop';
+        $classHandler = 'CIBlockPropertyCProp';
         $eventManager = EventManager::getInstance();
 
         $arEvents = $this->getEvents();

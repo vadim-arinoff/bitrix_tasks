@@ -18,7 +18,7 @@ class dev_site extends CModule
     public function __construct()
     {
         $arModuleVersion = array();
-        include __DIR__ . 'version.php';
+        include __DIR__ . '/version.php';
 
         $this->MODULE_VERSION = $arModuleVersion['VERSION'];
         $this->MODULE_VERSION_DATE = $arModuleVersion['VERSION_DATE'];
@@ -31,15 +31,16 @@ class dev_site extends CModule
 
         if (!$rsAgents->Fetch()) {
             \CAgent::AddAgent(
-            $agentFunction,      // Name func agent
-            "dev.site",        // Id module
-            "N",               // Periodic agent
-            3600,            // Iterval
-            "",             // DateCheck
-            "Y",               // Active
-            "",             // Date of first launch
-            100                  // Sort
+            $agentFunction,     // Name func agent
+            "dev.site",         // Id module
+            "N",                // Periodic agent
+            3600,               // Iterval
+            "",                 // DateCheck
+            "Y",                // Active
+            "",                 // Date of first launch
+            100                 // Sort
             );
+        }
         
         return true;
     }

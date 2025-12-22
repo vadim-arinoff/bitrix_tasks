@@ -23,7 +23,7 @@ class CIBlockPropertyCProp
         ];
     }
 
-    public function GetPropertyFieldHtml($arProperty, $value, $strHTMLControlName)
+    public static function GetPropertyFieldHtml($arProperty, $value, $strHTMLControlName)
     {
         $hideText = Loc::getMessage('IEX_CPROP_HIDE_TEXT');
         $clearText = Loc::getMessage('IEX_CPROP_CLEAR_TEXT');
@@ -157,7 +157,7 @@ class CIBlockPropertyCProp
 
     public static function GetLength($arProperty, $arValue)
     {
-        $arFields = self::prepareSetting(unserialize($arProperty['USER_TYPE_SETTINGS']));
+        $arFields = self::prepareSetting($arProperty['USER_TYPE_SETTINGS']);
 
         $result = false;
         foreach($arValue['VALUE'] as $code => $value){
@@ -308,41 +308,35 @@ class CIBlockPropertyCProp
     //HTML type of complex prop
 private static function showHtml($code, $title, $arValue, $strHTMLControlName)
 {
+    \Bitrix\Main\Loader::includeModule("fileman");
+    if (!CModule::IncludeModule("fileman")) {
+        return '<tr><td></td><td>Ошибка: модуль fileman не установлен</td></tr>';
+    }
     $result = '';
     $v = !empty($arValue['VALUE'][$code]) ? $arValue['VALUE'][$code] : '';
 
 
-    if($strHTMLControlName['MULTIPLE'] == 'Y') {
-        $name = preg_replace("/[\[\]]/i", "_", $strHTMLControlName['VALUE'] . '[' . $code . ']');
-    } else {
-        $name = $strHTMLControlName['VALUE'] . '[' . $code . ']';
-    }
+    $name = $strHTMLControlName['VALUE'] . '[' . $code . ']';
 
     ob_start();
 
     CFileMan::AddHTMLEditorFrame(
-        $name, // Имя поля
-        $v,    // Текущее значение
+        $name,           // Имя поля
+        $v,              // Текущее значение
         $name . "_TYPE", // Служебное имя для типа контента
-        strlen($v) ? "html" : "text", // Режим: html или text
-        array(
+        "html", // Режим: html или text
+        [
             'height' => 250, // Фиксированная высота
-        )
+            'width' => '100%', // Ширина редактора
+        ]
     );
 
-    if($strHTMLControlName['MULTIPLE'] == 'Y') {
-        echo '<input type="hidden" name="'.htmlspecialcharsbx($strHTMLControlName['VALUE'] . '[' . $code . ']').'" >';
-    }
-
-    $editorHtml = ob_get_contents();
-    ob_end_clean();
-
-    $result = '<tr>
+    $editorHtml = ob_get_clean();
+    
+    return '<tr>
                     <td align="right" valign="top">' . $title . ':</td>
                     <td>' . $editorHtml . '</td>
                 </tr>';
-
-    return $result;
 }
 
     public static function showDate($code, $title, $arValue, $strHTMLControlName)
@@ -469,45 +463,54 @@ private static function showHtml($code, $title, $arValue, $strHTMLControlName)
         }
     }
 
-    private static function showJsForSetting($inputName)
+private static function showJsForSetting($inputName)
     {
-        CJSCore::Init(array("jquery"));
         ?>
         <script>
             function addNewRows() {
-                $("#many-fields-table").append('' +
-                    '<tr valign="top">' +
+                var table = document.getElementById('many-fields-table');
+                if(!table) return;
+
+                var options = '<?=CUtil::JSEscape(self::getOptionList())?>';
+
+                var newRowHtml = '<tr valign="top">' +
                     '<td><input type="text" class="inp-code" size="20"></td>' +
                     '<td><input type="text" class="inp-title" size="35"></td>' +
                     '<td><input type="text" class="inp-sort" size="5" value="500"></td>' +
-                    '<td><select class="inp-type"><?=self::getOptionList()?></select></td>' +
-                    '</tr>');
+                    '<td><select class="inp-type">' + options + '</select></td>' +
+                    '</tr>';
+
+                table.insertAdjacentHTML('beforeend', newRowHtml);
             }
 
+            document.addEventListener('DOMContentLoaded', function() {
+                
+                document.addEventListener('input', function(e) {
+                    
+                    if (e.target && e.target.classList.contains('inp-code')) {
+                        var inputCode = e.target;
+                        var tr = inputCode.closest('tr');
+                        var code = inputCode.value;
 
-            $(document).on('change', '.inp-code', function(){
-                var code = $(this).val();
+                        var inpTitle = tr.querySelector('.inp-title');
+                        var inpSort = tr.querySelector('.inp-sort');
+                        var inpType = tr.querySelector('.inp-type');
 
-                if(code.length <= 0){
-                    $(this).closest('tr').find('input.inp-title').removeAttr('name');
-                    $(this).closest('tr').find('input.inp-sort').removeAttr('name');
-                    $(this).closest('tr').find('select.inp-type').removeAttr('name');
-                }
-                else{
-                    $(this).closest('tr').find('input.inp-title').attr('name', '<?=$inputName?>[' + code + '_TITLE]');
-                    $(this).closest('tr').find('input.inp-sort').attr('name', '<?=$inputName?>[' + code + '_SORT]');
-                    $(this).closest('tr').find('select.inp-type').attr('name', '<?=$inputName?>[' + code + '_TYPE]');
-                }
-            });
-
-            $(document).on('input', '.inp-sort', function(){
-                var num = $(this).val();
-                $(this).val(num.replace(/[^0-9]/gim,''));
+                        if (code.length <= 0) {
+                            if(inpTitle) inpTitle.removeAttribute('name');
+                            if(inpSort) inpSort.removeAttribute('name');
+                            if(inpType) inpType.removeAttribute('name');
+                        } else {
+                            if(inpTitle) inpTitle.name = '<?=$inputName?>[' + code + '_TITLE]';
+                            if(inpSort) inpSort.name = '<?=$inputName?>[' + code + '_SORT]';
+                            if(inpType) inpType.name = '<?=$inputName?>[' + code + '_TYPE]';
+                        }
+                    }
+                });
             });
         </script>
         <?
     }
-
     private static function showCssForSetting()
     {
         if(!self::$showedCss) {
@@ -529,6 +532,9 @@ private static function showHtml($code, $title, $arValue, $strHTMLControlName)
     {
         $arResult = [];
 
+        if (!is_array($arSetting)) return $arResult;
+        
+
         foreach ($arSetting as $key => $value){
             if(strstr($key, '_TITLE') !== false) {
                 $code = str_replace('_TITLE', '', $key);
@@ -544,17 +550,10 @@ private static function showHtml($code, $title, $arValue, $strHTMLControlName)
             }
         }
 
-        if(!function_exists('cmp')){
-            function cmp($a, $b)
-            {
-                if ($a['SORT'] == $b['SORT']) {
-                    return 0;
-                }
-                return ($a['SORT'] < $b['SORT']) ? -1 : 1;
-            }
-        }
-
-        uasort($arResult, 'cmp');
+        uasort($arResult, function ($a, $b) {
+            if ($a['SORT'] == $b['SORT']) return 0;
+            return ($a['SORT'] < $b['SORT']) ? -1 : 1;
+        });
 
         return $arResult;
     }
